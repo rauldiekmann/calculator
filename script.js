@@ -81,4 +81,11 @@ for (var i = 0 ; i < numberButton.length; i++) {
      */
 
 
-    
+
+//CALCULATIONS FROM INPUTTED NUMBERS
+
+/*1.When user presses operator, store current screen value into another
+value, then save the chosen operation to perform, then store the next number,
+
+
+Then use operate when "=" key is pressed, and display the operation result*/
