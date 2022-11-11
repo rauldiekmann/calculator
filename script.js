@@ -89,3 +89,29 @@ value, then save the chosen operation to perform, then store the next number,
 
 
 Then use operate when "=" key is pressed, and display the operation result*/
+
+
+//Add event listener to store current screen value when pressing operator
+
+let operatorButton = document.getElementsByClassName("operator");
+
+for (var i = 0 ; i < operatorButton.length; i++) {
+     operatorButton[i].addEventListener('click' , () =>{
+      /*1.coge valor/contenido del botón operador, almacena los siguientes valores
+      como parámetros de operate():
+        -El valor actual de la pantalla como num1
+        -El operando pulsado como operator
+        
+        2.Una vez se ha hecho esto, hay que conseguir 
+        que al volver a pulsar un botón numérico, el valor de la pantalla
+        se convierta en ese mismo número y desde ahí se sigan podiendo
+        añadir números.
+      
+        3.Una vez se pulse "=", el valor actual de la pantalla se
+        convierte en el parámetro num2 de operate(), y justo después
+        se ejecuta operate().
+
+        4.Finalmente el resultado de operate se muestra en pantalla
+
+*/
+     updateScreen(numero);})};
