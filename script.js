@@ -1,30 +1,65 @@
 
+/*
+EXTRAS
+2.Boton de decimal, que puedan añadir sólo 1
+5.Botón de borrar el último número introducido
+6.Añadir soporte de teclado */
+
+
+
+function getDecimalPart(num) {
+  if (Number.isInteger(num)) {
+    return 0;
+  }
+
+  const decimalStr = num.toString().split('.')[1];
+  return Number(decimalStr);
+}
+
+function roundTo3(numero){
+  if (getDecimalPart(numero)>3) {
+      let numeroFinal = (numero.toFixed(3));
+      return numeroFinal;
+  }
+  else{
+    let numeroFinal = numero;
+    return numeroFinal;
+  }
+  
+}
+
+
+
 //MAIN OPERATOR FUNCTIONS
 
 function add(num1,num2) {
 	let add = num1+num2;
-  calculatorScreen.value = add;
+  let finalNumber= roundTo3(add);
+  calculatorScreen.value = finalNumber;
   screenValue=Number(calculatorScreen.value);
   return add;
 };
 
 function subtract(num1,num2) {
 	let subtract = num1-num2;
-  calculatorScreen.value = subtract;
+  let finalNumber= roundTo3(subtract);
+  calculatorScreen.value = finalNumber;
   screenValue=Number(calculatorScreen.value);
   return subtract;
 };
 
 function multiply(num1,num2) {
 	let multiply = num1*num2;
-  calculatorScreen.value =  multiply;
+  let finalNumber= roundTo3(multiply);
+  calculatorScreen.value = finalNumber;
   screenValue=Number(calculatorScreen.value);
   return multiply;
 }
 
 function divide(num1,num2) {
 	let divide = num1/num2;
-  calculatorScreen.value = divide;
+  let finalNumber= roundTo3(divide);
+  calculatorScreen.value = finalNumber;
   screenValue=Number(calculatorScreen.value);
   return divide;
 }
@@ -42,32 +77,19 @@ function operate (operator,num1,num2){
         multiply(num1,num2);
     }
     else if (operator == "/"){
-        divide(num1,num2);
+      if (num2!=0){
+        divide(num1,num2);}
+      else{
+        alert("You can't divide by 0!!!")
+        allClear();
+      }
+        
     }
     wasOperatorPressed = false;
 }
 
 
-function cleanBuffer(){
-  number1 = undefined;
-  number2 = undefined;
-  pushedOperator = undefined;
-}
 
-//limpio n2, n1= resultado y operando pulsado = operando
-
-function chainBuffer(){
-  number1 = screenValue;
-  number2 = undefined;
-}
-
-function allClear(){
-  number1 = undefined;
-  number2 = undefined;
-  pushedOperator = undefined;
-  screenValue= 0;
-  calculatorScreen.value=0;
-}
 /*Create the functions that populate the display
  when you click the number buttons. 
  You should be storing the ‘display value’ in a variable 
@@ -90,6 +112,31 @@ let number2;
 let pushedOperator;
 let wasOperatorPressed = false;
 
+function cleanBuffer(){
+  number1 = undefined;
+  number2 = undefined;
+  pushedOperator = undefined;
+  screenValue= 0;
+}
+
+//limpio n2, n1= resultado y operando pulsado = operando
+
+function chainBuffer(){
+  number1 = screenValue;
+  number2 = undefined;
+}
+
+function allClear(){
+  number1 = undefined;
+  number2 = undefined;
+  pushedOperator = undefined;
+  screenValue= 0;
+  calculatorScreen.value=0;
+}
+
+let clearButton = document.getElementById("allClear");
+clearButton.addEventListener('click' , () =>{ 
+  allClear()});
 
 
 /* tenemos una variable, storedValue
@@ -100,7 +147,13 @@ Tengo q cambiar un boolean o algo al pulsar un numero tras definir el operador
  boolean?*/
 
 function updateScreen(number){
-  if (pushedOperator==undefined){
+  //pantalla = nuevo numero despues de pulsar "="
+  if (pushedOperator==undefined && screenValue==0 && calculatorScreen.value!=0){
+    calculatorScreen.value= number;
+    screenValue=Number(calculatorScreen.value);
+  }
+  //añadir  numeros
+  else if (pushedOperator==undefined){
     calculatorScreen.value= '' + calculatorScreen.value + number;
     screenValue=Number(calculatorScreen.value);
   }
@@ -181,18 +234,13 @@ for (var i = 0 ; i < operatorButton.length; i++) {
       }
     })};
 
-  /*CASO DE FALLBACK A IMPLEMENTAR: cuando uso operadores en cadena,
-  queda number1 como el resultado, number 2 como undefined
-  y mantenemos el operando. Evitar que se coja 
-  siempre el screenValue como number2 pq coje el resultado de la operación
-  anterior
-  */
-
+  
 
 
 
 
 //FUNCION LIMPIAR
 
-let clearButton = document.getElementById("all-clear");
-clearButton.addEventListener("click",allClear());
+
+
+
